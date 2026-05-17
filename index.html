@@ -1,17 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Puppy Health Manager</title>
+    <style>
+        :root {
+            font-family: "Segoe UI", Arial, sans-serif;
+            color-scheme: light;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            line-height: 1.5;
+            background: #f6f8fb;
+            color: #1d2733;
+        }
+
+        header,
+        main,
+        footer {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        nav ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            list-style: none;
+            padding: 0;
+        }
+
+        nav a {
+            color: #0052cc;
+            text-decoration: none;
+        }
+
+        section {
+            background: #fff;
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid #dce3ec;
+        }
+
+        form {
+            display: grid;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 0.75rem;
+        }
+
+        input,
+        select,
+        textarea,
+        button {
+            width: 100%;
+            font: inherit;
+            padding: 0.55rem;
+        }
+
+        button {
+            cursor: pointer;
+            border: 1px solid #0052cc;
+            background: #0052cc;
+            color: #fff;
+            border-radius: 6px;
+        }
+
+        button.secondary {
+            background: #fff;
+            color: #0052cc;
+        }
+
+        ul.card-list {
+            padding: 0;
+            list-style: none;
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .card {
+            border: 1px solid #dce3ec;
+            border-radius: 8px;
+            padding: 0.75rem;
+            background: #fafcff;
+        }
+
+        .status {
+            min-height: 1.5rem;
+            color: #0b6b31;
+            font-weight: 600;
+        }
+
+        .muted {
+            color: #5f6b7a;
+            font-size: 0.95rem;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>🐾 Puppy Health Manager</h1>
-        <nav>
+        <h1>🐾 Puppy Health Manager V1.0</h1>
+        <p>一站式科学养宠与宠物健康管理平台（功能优先级开发版）</p>
+        <nav aria-label="主导航">
             <ul>
-                <li><a href="#health-record">健康档案</a></li>
-                <li><a href="#symptom-check">自查与问诊</a></li>
+                <li><a href="#health-record">宠物健康档案</a></li>
+                <li><a href="#symptom-check">症状自查与问诊</a></li>
                 <li><a href="#appointment">服务预约</a></li>
                 <li><a href="#community">互动社区</a></li>
             </ul>
@@ -19,33 +125,127 @@
     </header>
 
     <main>
-        <section id="health-record">
-            <h2>宠物健康档案</h2>
-            <p>管理宠物的健康数据，包括疫苗接种、体检报告和用药记录。</p>
-            <button>📋 记录健康数据</button>
+        <section id="health-record" aria-labelledby="health-record-title">
+            <h2 id="health-record-title">1) 宠物健康档案</h2>
+            <p class="muted">按用户账号分组存储宠物资料，并展示当前账号的活跃档案列表。</p>
+            <form id="pet-form">
+                <div class="grid">
+                    <label>用户账号 ID
+                        <input id="account-id" name="accountId" type="text" required value="demo-user">
+                    </label>
+                    <label>宠物名字
+                        <input name="name" type="text" required>
+                    </label>
+                    <label>物种
+                        <select name="species" required>
+                            <option value="">请选择</option>
+                            <option value="dog">狗</option>
+                            <option value="cat">猫</option>
+                            <option value="other">其他</option>
+                        </select>
+                    </label>
+                    <label>品种
+                        <input name="breed" type="text" required>
+                    </label>
+                    <label>出生日期
+                        <input name="birthDate" type="date" required>
+                    </label>
+                    <label>疫苗状态
+                        <select name="vaccinationStatus" required>
+                            <option value="">请选择</option>
+                            <option value="completed">已完成</option>
+                            <option value="partial">部分完成</option>
+                            <option value="none">未接种</option>
+                        </select>
+                    </label>
+                </div>
+                <button type="submit">新增宠物档案</button>
+            </form>
+            <p class="status" id="pet-status" aria-live="polite"></p>
+            <h3>活跃宠物档案列表</h3>
+            <ul class="card-list" id="pet-list"></ul>
         </section>
 
-        <section id="symptom-check">
-            <h2>智能症状自查与在线问诊</h2>
-            <p>通过AI初步症状筛选，提供就医建议与在线问诊服务。</p>
-            <button>💬 开始自查</button>
+        <section id="symptom-check" aria-labelledby="symptom-title">
+            <h2 id="symptom-title">2) 智能症状自查与在线问诊</h2>
+            <p class="muted">免责声明：症状自查结果仅供参考，不能替代执业兽医的专业诊断。</p>
+            <form id="symptom-form">
+                <label>选择当前最明显的症状
+                    <select id="symptom-input" required>
+                        <option value="">请选择</option>
+                        <option value="vomit">呕吐</option>
+                        <option value="cough">咳嗽</option>
+                        <option value="itch">皮肤瘙痒</option>
+                    </select>
+                </label>
+                <button type="submit">开始 AI 决策树自查</button>
+            </form>
+            <div class="card" id="symptom-result" aria-live="polite"></div>
+            <form id="consult-form">
+                <label>升级为在线问诊（上传病历）
+                    <input id="medical-records" type="file" multiple aria-describedby="upload-hint">
+                </label>
+                <p id="upload-hint" class="muted">可上传既往病历、化验单或图片文件。仅记录文件名用于演示。</p>
+                <button type="submit" class="secondary">提交问诊请求</button>
+            </form>
+            <p class="status" id="consult-status" aria-live="polite"></p>
+            <ul class="card-list" id="consultation-list"></ul>
         </section>
 
-        <section id="appointment">
-            <h2>服务预约</h2>
-            <p>查看附近宠物医院/诊所，快速预约服务。</p>
-            <button>📅 查找医院</button>
+        <section id="appointment" aria-labelledby="appointment-title">
+            <h2 id="appointment-title">3) 服务预约系统</h2>
+            <p class="muted">通过地区筛选附近诊所（Mock LBS），选择可预约时段并发送确认提示。</p>
+            <form id="appointment-form">
+                <div class="grid">
+                    <label>所在区域
+                        <select id="area" required>
+                            <option value="">请选择区域</option>
+                            <option value="beijing">北京</option>
+                            <option value="shanghai">上海</option>
+                        </select>
+                    </label>
+                    <label>诊所
+                        <select id="clinic" required>
+                            <option value="">请先选择区域</option>
+                        </select>
+                    </label>
+                    <label>可预约时段
+                        <select id="slot" required>
+                            <option value="">请先选择诊所</option>
+                        </select>
+                    </label>
+                </div>
+                <button type="submit">确认预约</button>
+            </form>
+            <p class="status" id="appointment-status" aria-live="polite"></p>
+            <ul class="card-list" id="appointment-list"></ul>
         </section>
 
-        <section id="community">
-            <h2>互动社区</h2>
-            <p>分享养宠日记，提问悬赏，与兽医及创作者互动。</p>
-            <button>📢 进入社区</button>
+        <section id="community" aria-labelledby="community-title">
+            <h2 id="community-title">4) 互动社区（含悬赏机制）</h2>
+            <p class="muted">提问可设置积分悬赏，回答被采纳后将积分转入回答者。</p>
+            <p>当前积分余额：<strong id="wallet-balance"></strong></p>
+            <form id="post-form">
+                <label>问题标题
+                    <input id="post-title" type="text" required>
+                </label>
+                <label>问题内容
+                    <textarea id="post-content" rows="3" required></textarea>
+                </label>
+                <label>悬赏积分
+                    <input id="post-reward" type="number" min="0" step="1" value="0" required>
+                </label>
+                <button type="submit">发布问题</button>
+            </form>
+            <p class="status" id="community-status" aria-live="polite"></p>
+            <ul class="card-list" id="post-list"></ul>
         </section>
     </main>
 
     <footer>
         <p>© 2026 Puppy Health Manager</p>
     </footer>
+
+    <script type="module" src="./src/app.js"></script>
 </body>
 </html>
