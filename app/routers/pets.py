@@ -4,6 +4,7 @@ import sqlite3
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from app.db.connection import Database
+from app.core.auth import create_auth_dependency
 from app.schemas.requests import PetCreateRequest, WeightRecordCreateRequest
 from app.models.repositories import PetRepository, WeightRecordRepository
 
@@ -13,16 +14,16 @@ def create_pet_router(db: Database) -> APIRouter:
     router = APIRouter(prefix="/pets", tags=["pets"])
     pet_repo = PetRepository(db)
     weight_repo = WeightRecordRepository(db)
+    get_current_user = create_auth_dependency(db)
 
-    @router.post("", status_code=status.HTTP_201_CREATED)
-    def create_pet(payload: PetCreateRequest, user: sqlite3.Row = Depends(lambda: None)) -> dict:
+    @router.post("", status_code=status.HTTP_200_OK)
+    def create_pet(payload: PetCreateRequest, user: sqlite3.Row = Depends(get_current_user)) -> dict:
         """Create a new pet profile for the current user."""
-        # Note: In real implementation, user would come from auth dependency
         pet_id = pet_repo.create(owner_id=user["id"], **payload.model_dump())
         return {"id": pet_id}
 
     @router.get("")
-    def list_pets(user: sqlite3.Row = Depends(lambda: None)) -> list[dict]:
+    def list_pets(user: sqlite3.Row = Depends(get_current_user)) -> list[dict]:
         """List all pets owned by the current user."""
         rows = pet_repo.get_by_owner(user["id"])
         return [dict(row) for row in rows]
@@ -31,7 +32,7 @@ def create_pet_router(db: Database) -> APIRouter:
     def add_weight_record(
         pet_id: int,
         payload: WeightRecordCreateRequest,
-        user: sqlite3.Row = Depends(lambda: None),
+        user: sqlite3.Row = Depends(get_current_user),
     ) -> dict:
         """Add a weight record for a specific pet."""
         pet = pet_repo.get_by_id_and_owner(pet_id, user["id"])
@@ -47,7 +48,7 @@ def create_pet_router(db: Database) -> APIRouter:
         return {"id": record_id}
 
     @router.get("/{pet_id}/weight-records")
-    def list_weight_records(pet_id: int, user: sqlite3.Row = Depends(lambda: None)) -> list[dict]:
+    def list_weight_records(pet_id: int, user: sqlite3.Row = Depends(get_current_user)) -> list[dict]:
         """List all weight records for a specific pet."""
         pet = pet_repo.get_by_id_and_owner(pet_id, user["id"])
         if pet is None:

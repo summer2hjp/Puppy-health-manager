@@ -4,7 +4,7 @@ import sqlite3
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from app.db.connection import Database
-from app.core.auth import require_role
+from app.core.auth import require_role, create_auth_dependency
 from app.models.repositories import VetQueueRepository
 
 
@@ -12,9 +12,10 @@ def create_vet_router(db: Database) -> APIRouter:
     """Create veterinary queue router."""
     router = APIRouter(prefix="/vet", tags=["veterinary"])
     vet_repo = VetQueueRepository(db)
+    get_current_user = create_auth_dependency(db)
 
     @router.get("/queue")
-    def list_vet_queue(user: sqlite3.Row = Depends(lambda: None)) -> list[dict]:
+    def list_vet_queue(user: sqlite3.Row = Depends(get_current_user)) -> list[dict]:
         """List all items in the veterinary consultation queue (vet only)."""
         require_role(user, {"vet"})
         rows = vet_repo.get_all()
@@ -33,7 +34,7 @@ def create_vet_router(db: Database) -> APIRouter:
         ]
 
     @router.post("/queue/{queue_id}/start")
-    def start_vet_consult(queue_id: int, user: sqlite3.Row = Depends(lambda: None)) -> dict:
+    def start_vet_consult(queue_id: int, user: sqlite3.Row = Depends(get_current_user)) -> dict:
         """Start a veterinary consultation (vet only)."""
         require_role(user, {"vet"})
         current = vet_repo.get_by_id(queue_id)

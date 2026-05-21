@@ -1,4 +1,6 @@
 """Authentication router."""
+import sqlite3
+
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from app.db.connection import Database
