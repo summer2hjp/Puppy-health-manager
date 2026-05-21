@@ -1,4 +1,6 @@
 """Authentication dependencies and security."""
+import sqlite3
+
 from fastapi import Depends, HTTPException, Security, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
