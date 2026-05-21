@@ -1,4 +1,6 @@
 """Database initialization and schema management."""
+import sqlite3
+
 from app.db.connection import Database
 from app.core.datetime_utils import utc_now_iso
 
