@@ -16,29 +16,29 @@ export function CmsPage() {
       <StatusBanner state="error" message="发现 1 条内容命中医疗敏感词，需要人工复审。" />
 
       <div className="grid gap-4 lg:grid-cols-3">
-        <article className="card p-4 lg:col-span-2">
+        <article className="card glassmorphism p-4 lg:col-span-2">
           <h4 className="font-medium">待处理稿件</h4>
           <ul className="mt-3 space-y-3">
             {submissions.map((item) => (
-              <li key={item.title} className="rounded-md border border-brand-border p-3 text-sm">
+              <li key={item.title} className="rounded-md border border-brand-border p-3 text-sm bg-white/40 backdrop-blur-sm">
                 <p className="font-medium">{item.title}</p>
                 <p className="text-brand-muted">作者：{item.author} · 状态：{item.status}</p>
               </li>
             ))}
           </ul>
         </article>
-        <article className="card p-4">
+        <article className="card glassmorphism p-4">
           <h4 className="font-medium">发布设置</h4>
           <div className="mt-3 space-y-2 text-sm">
             <label className="block">
               <span className="mb-1 block text-brand-muted">发布时间</span>
-              <input className="focus-ring w-full rounded-md border border-brand-border px-3 py-2" type="datetime-local" />
+              <input className="focus-ring w-full rounded-md border border-brand-border px-3 py-2 bg-white/60 backdrop-blur-sm" type="datetime-local" />
             </label>
             <label className="block">
               <span className="mb-1 block text-brand-muted">SEO 标题</span>
-              <input className="focus-ring w-full rounded-md border border-brand-border px-3 py-2" type="text" placeholder="输入页面 SEO 标题" />
+              <input className="focus-ring w-full rounded-md border border-brand-border px-3 py-2 bg-white/60 backdrop-blur-sm" type="text" placeholder="输入页面 SEO 标题" />
             </label>
-            <button className="focus-ring mt-2 w-full rounded-md bg-brand-primary px-3 py-2 text-sm font-medium text-white hover:bg-brand-primaryHover">
+            <button className="focus-ring mt-2 w-full rounded-md bg-brand-primary/90 px-3 py-2 text-sm font-medium text-white hover:bg-brand-primaryHover backdrop-blur-sm">
               保存并提交审核
             </button>
           </div>

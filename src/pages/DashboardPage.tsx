@@ -58,10 +58,10 @@ export function DashboardPage() {
   }, []);
   
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       <section className="space-y-4 p-4">
         {/* Hero Banner with Image - Full Width */}
-        <div className="relative overflow-hidden rounded-lg shadow-md">
+        <div className="relative overflow-hidden rounded-lg shadow-md glassmorphism">
           {heroImageSrc ? (
             <img 
               src={heroImageSrc} 
@@ -89,7 +89,7 @@ export function DashboardPage() {
           <MetricCard key={metric.title} {...metric} />
         ))}
       </div>
-      <article className="card p-4">
+      <article className="card glassmorphism p-4">
         <h4 className="font-medium">关键路径</h4>
         <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-brand-muted">
           <li>用户登录后创建宠物档案并完成首条健康记录。</li>

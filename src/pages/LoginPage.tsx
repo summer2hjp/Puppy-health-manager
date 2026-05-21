@@ -69,15 +69,18 @@ export function LoginPage() {
   }, []);
 
   return (
-    <main id="main-content" className="relative flex min-h-screen items-center justify-center overflow-hidden px-4">
-      {/* 背景图片 */}
+    <main id="main-content" className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 global-bg">
+      {/* 背景图片层 - 使用磨玻璃效果遮罩 */}
       <div 
         className={`absolute inset-0 bg-cover bg-center z-0 transition-opacity duration-500 ${bgLoaded ? 'opacity-100' : 'opacity-0'}`}
         style={{ backgroundImage: `url('${bgSrc}')` }}
         aria-hidden="true"
       />
       
-      <section className="relative z-10 w-full max-w-md rounded-lg border border-brand-border bg-white/95 backdrop-blur-sm p-6 shadow-popup">
+      {/* 磨玻璃效果遮罩层 */}
+      <div className="absolute inset-0 bg-black/20 backdrop-blur-sm z-0" aria-hidden="true" />
+      
+      <section className="relative z-10 w-full max-w-md rounded-lg border border-white/30 glassmorphism p-6 shadow-popup">
         <header className="mb-5 flex flex-col items-center">
           {logoLoaded && logoSrc && (
             <img 

@@ -9,9 +9,9 @@ const navItems = [
 
 export function AppShell() {
   return (
-    <div className="min-h-screen bg-brand-bg text-brand-text">
+    <div className="min-h-screen bg-brand-bg text-brand-text global-bg">
       <div className="mx-auto flex max-w-7xl gap-6 px-4 py-6 lg:px-8">
-        <aside className="hidden w-56 flex-shrink-0 rounded-lg border border-brand-border bg-white p-4 shadow-card md:block">
+        <aside className="hidden w-56 flex-shrink-0 rounded-lg border border-brand-border bg-white/80 backdrop-blur-md p-4 shadow-card md:block">
           <h1 className="mb-4 text-base font-semibold">PetCare 控制台</h1>
           <nav className="space-y-2" aria-label="主导航">
             {navItems.map((item) => (
@@ -33,12 +33,12 @@ export function AppShell() {
         </aside>
 
         <main id="main-content" className="min-w-0 flex-1 space-y-6">
-          <header className="card flex items-center justify-between px-5 py-4">
+          <header className="card glassmorphism flex items-center justify-between px-5 py-4">
             <div>
               <p className="text-xs uppercase tracking-wide text-brand-muted">Prototype</p>
               <h2 className="text-lg font-semibold">宠物健康管理平台</h2>
             </div>
-            <button className="focus-ring rounded-md border border-brand-border bg-white px-3 py-2 text-sm hover:bg-slate-50">
+            <button className="focus-ring rounded-md border border-brand-border bg-white/80 px-3 py-2 text-sm hover:bg-slate-50 backdrop-blur-sm">
               导出报告
             </button>
           </header>

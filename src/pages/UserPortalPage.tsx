@@ -16,7 +16,7 @@ export function UserPortalPage() {
       <StatusBanner state="loading" message="正在同步宠物健康数据，请稍候。" />
 
       <div className="grid gap-4 lg:grid-cols-3">
-        <article className="card p-4 lg:col-span-2">
+        <article className="card glassmorphism p-4 lg:col-span-2">
           <h4 className="font-medium">即将到期提醒</h4>
           <ul className="mt-3 space-y-3">
             {records.map((item) => (
@@ -28,11 +28,11 @@ export function UserPortalPage() {
           </ul>
         </article>
 
-        <article className="card p-4">
+        <article className="card glassmorphism p-4">
           <h4 className="font-medium">快捷操作</h4>
           <div className="mt-3 grid gap-2">
             {['新建问诊', '上传体检报告', '体重记录', '进入社区'].map((action) => (
-              <button key={action} className="focus-ring rounded-md border border-brand-border px-3 py-2 text-left text-sm hover:bg-slate-50">
+              <button key={action} className="focus-ring rounded-md border border-brand-border px-3 py-2 text-left text-sm hover:bg-slate-50 backdrop-blur-sm bg-white/60">
                 {action}
               </button>
             ))}
