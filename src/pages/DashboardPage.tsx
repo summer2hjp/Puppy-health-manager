@@ -1,5 +1,6 @@
 import { MetricCard } from '../components/MetricCard';
 import { StatusBanner } from '../components/StatusBanner';
+import { useState, useEffect } from 'react';
 
 const metrics = [
   { title: '日活用户', value: '12,480', trend: '较昨日 +8.2%' },
@@ -8,16 +9,31 @@ const metrics = [
 ];
 
 export function DashboardPage() {
+  const [heroImageLoaded, setHeroImageLoaded] = useState(false);
+
+  useEffect(() => {
+    // 预加载 Dashboard Hero 图片
+    const img = new Image();
+    img.src = '/docs/images/dashboard/dashboard-hero.png';
+    img.onload = () => setHeroImageLoaded(true);
+    img.onerror = () => console.error('Failed to load dashboard hero image');
+  }, []);
+
   return (
     <section className="space-y-4">
       {/* Hero Banner with Image */}
       <div className="relative overflow-hidden rounded-lg shadow-md">
-        <img 
-          src="/images/dashboard-hero.svg" 
-          alt="Dashboard Hero" 
-          className="h-48 w-full object-cover"
-          loading="eager"
-        />
+        {heroImageLoaded && (
+          <img 
+            src="/docs/images/dashboard/dashboard-hero.png" 
+            alt="Dashboard Hero" 
+            className="h-48 w-full object-cover"
+            loading="eager"
+          />
+        )}
+        {!heroImageLoaded && (
+          <div className="h-48 w-full bg-gradient-to-r from-brand-primary/20 to-brand-secondary/20 animate-pulse" />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
         <div className="absolute bottom-4 left-4 text-white">
           <h2 className="text-xl font-semibold">运营数据仪表盘</h2>
