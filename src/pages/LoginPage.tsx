@@ -4,9 +4,22 @@ import { Input } from '../components/ui/Input';
 
 export function LoginPage() {
   return (
-    <main id="main-content" className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-100 to-blue-50 px-4">
-      <section className="w-full max-w-md rounded-lg border border-brand-border bg-white p-6 shadow-popup">
-        <header className="mb-5">
+    <main id="main-content" className="relative flex min-h-screen items-center justify-center overflow-hidden px-4">
+      {/* 背景图片 */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center z-0"
+        style={{ backgroundImage: "url('/images/login-bg.svg')" }}
+        aria-hidden="true"
+      />
+      
+      <section className="relative z-10 w-full max-w-md rounded-lg border border-brand-border bg-white/95 backdrop-blur-sm p-6 shadow-popup">
+        <header className="mb-5 flex flex-col items-center">
+          <img 
+            src="/images/logo.svg" 
+            alt="PetCare Logo" 
+            className="mb-3 h-12 w-auto"
+            loading="eager"
+          />
           <h1 className="text-2xl font-semibold">欢迎登录 PetCare</h1>
           <p className="mt-1 text-sm text-brand-muted">支持宠物主、兽医与运营管理员统一登录。</p>
         </header>

@@ -10,6 +10,21 @@ const metrics = [
 export function DashboardPage() {
   return (
     <section className="space-y-4">
+      {/* Hero Banner with Image */}
+      <div className="relative overflow-hidden rounded-lg shadow-md">
+        <img 
+          src="/images/dashboard-hero.svg" 
+          alt="Dashboard Hero" 
+          className="h-48 w-full object-cover"
+          loading="eager"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+        <div className="absolute bottom-4 left-4 text-white">
+          <h2 className="text-xl font-semibold">运营数据仪表盘</h2>
+          <p className="text-sm opacity-90">实时监控核心业务指标</p>
+        </div>
+      </div>
+
       <header>
         <h3 className="section-title">运营总览原型</h3>
         <p className="section-desc">聚合用户、问诊、内容、预约四类核心指标。</p>
