@@ -2,6 +2,43 @@ import { MetricCard } from '../components/MetricCard';
 import { StatusBanner } from '../components/StatusBanner';
 import { useState, useEffect } from 'react';
 
+// 支持的图片格式列表（按优先级排序）
+const SUPPORTED_FORMATS = ['png', 'jpg', 'jpeg'];
+
+// 通用图片预加载函数：尝试多种格式直到成功
+const preloadImageWithFormats = (
+  basePath: string,
+  onLoad: (src: string) => void,
+  onError?: () => void
+) => {
+  let loaded = false;
+  
+  // 尝试每种格式
+  for (const format of SUPPORTED_FORMATS) {
+    const img = new Image();
+    const src = `${basePath}.${format}`;
+    
+    img.onload = () => {
+      if (!loaded) {
+        loaded = true;
+        console.log(`Successfully loaded: ${src}`);
+        onLoad(src);
+      }
+    };
+    
+    img.onerror = () => {
+      // 如果是最后一个格式才报错
+      if (format === SUPPORTED_FORMATS[SUPPORTED_FORMATS.length - 1] && !loaded) {
+        console.error(`Failed to load image with any format: ${basePath}`);
+        onError?.();
+      }
+      // 继续尝试下一个格式
+    };
+    
+    img.src = src;
+  }
+};
+
 const metrics = [
   { title: '日活用户', value: '12,480', trend: '较昨日 +8.2%' },
   { title: '问诊转化率', value: '17.3%', trend: '目标值 15%' },
@@ -9,29 +46,29 @@ const metrics = [
 ];
 
 export function DashboardPage() {
-  const [heroImageLoaded, setHeroImageLoaded] = useState(false);
-
+  const [heroImageSrc, setHeroImageSrc] = useState<string | null>(null);
+  
   useEffect(() => {
-    // 预加载 Dashboard Hero 图片
-    const img = new Image();
-    img.src = '/docs/images/dashboard/dashboard-hero.png';
-    img.onload = () => setHeroImageLoaded(true);
-    img.onerror = () => console.error('Failed to load dashboard hero image');
+    // 预加载 Dashboard Hero 图片（支持 png/jpg）
+    preloadImageWithFormats(
+      '/docs/images/dashboard/dashboard-hero',
+      (src) => setHeroImageSrc(src),
+      () => console.error('Dashboard hero image failed to load')
+    );
   }, []);
-
+  
   return (
     <section className="space-y-4">
       {/* Hero Banner with Image */}
       <div className="relative overflow-hidden rounded-lg shadow-md">
-        {heroImageLoaded && (
+        {heroImageSrc ? (
           <img 
-            src="/docs/images/dashboard/dashboard-hero.png" 
+            src={heroImageSrc} 
             alt="Dashboard Hero" 
             className="h-48 w-full object-cover"
             loading="eager"
           />
-        )}
-        {!heroImageLoaded && (
+        ) : (
           <div className="h-48 w-full bg-gradient-to-r from-brand-primary/20 to-brand-secondary/20 animate-pulse" />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
