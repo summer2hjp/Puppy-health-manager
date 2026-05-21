@@ -80,21 +80,100 @@ body {
 
 /* 增强文字可读性 - 深色文字 */
 .text-readable-dark {
-  color: #1f2937;
+  color: #1d1d1f;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
-/* 增强文字可读性 - 标题文字 */
+/* 增强文字可读性 - 标题文字 (Apple 风格) */
 .text-readable-title {
-  color: #111827;
+  color: #1d1d1f;
   font-weight: 600;
+  letter-spacing: -0.02em;
   text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
 }
 
 /* 增强文字可读性 - 次要文字 */
 .text-readable-muted {
-  color: #374151;
+  color: #424245;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7);
+}
+
+/* Apple 风格字体样式 */
+.apple-style-heading {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Noto Sans SC', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: #1d1d1f;
+}
+
+.apple-style-subheading {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'PingFang SC', 'Noto Sans SC', sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: #424245;
+}
+
+.apple-style-body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'PingFang SC', 'Noto Sans SC', sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #1d1d1f;
+}
+
+/* 滚动卡片容器样式 */
+.scroll-cards-container {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  padding-bottom: 0.5rem;
+  scroll-behavior: smooth;
+}
+
+.scroll-cards-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.scroll-cards-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.scroll-cards-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.scroll-card-item {
+  flex: 0 0 auto;
+  width: 280px;
+  scroll-snap-align: start;
+}
+
+/* 自动滚动卡片动画 - 3s 轮播 */
+@keyframes scroll-horizontal {
+  0%, 30% {
+    transform: translateX(0);
+  }
+  33%, 63% {
+    transform: translateX(-296px); /* 280px + 16px gap */
+  }
+  66%, 96% {
+    transform: translateX(-592px); /* (280px + 16px gap) * 2 */
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.scroll-cards-auto {
+  animation: scroll-horizontal 9s infinite ease-in-out;
+}
+
+.scroll-cards-auto:hover {
+  animation-play-state: paused;
 }
 
 .focus-ring {
