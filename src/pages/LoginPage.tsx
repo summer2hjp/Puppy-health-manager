@@ -49,7 +49,7 @@ export function LoginPage() {
   useEffect(() => {
     // 预加载背景图（支持 png/jpg）
     preloadImageWithFormats(
-      '/docs/images/login/login-bg',
+      '/images/login/login-bg',
       (src) => {
         setBgSrc(src);
         setBgLoaded(true);
@@ -59,7 +59,7 @@ export function LoginPage() {
     
     // 预加载 Logo（支持 png/jpg）
     preloadImageWithFormats(
-      '/docs/images/login/logo',
+      '/images/login/logo',
       (src) => {
         setLogoSrc(src);
         setLogoLoaded(true);

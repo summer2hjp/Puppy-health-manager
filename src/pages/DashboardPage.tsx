@@ -51,32 +51,33 @@ export function DashboardPage() {
   useEffect(() => {
     // 预加载 Dashboard Hero 图片（支持 png/jpg）
     preloadImageWithFormats(
-      '/docs/images/dashboard/dashboard-hero',
+      '/images/dashboard/dashboard-hero',
       (src) => setHeroImageSrc(src),
       () => console.error('Dashboard hero image failed to load')
     );
   }, []);
   
   return (
-    <section className="space-y-4">
-      {/* Hero Banner with Image */}
-      <div className="relative overflow-hidden rounded-lg shadow-md">
-        {heroImageSrc ? (
-          <img 
-            src={heroImageSrc} 
-            alt="Dashboard Hero" 
-            className="h-48 w-full object-cover"
-            loading="eager"
-          />
-        ) : (
-          <div className="h-48 w-full bg-gradient-to-r from-brand-primary/20 to-brand-secondary/20 animate-pulse" />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-        <div className="absolute bottom-4 left-4 text-white">
-          <h2 className="text-xl font-semibold">运营数据仪表盘</h2>
-          <p className="text-sm opacity-90">实时监控核心业务指标</p>
+    <div className="min-h-screen bg-gray-50">
+      <section className="space-y-4 p-4">
+        {/* Hero Banner with Image - Full Width */}
+        <div className="relative overflow-hidden rounded-lg shadow-md">
+          {heroImageSrc ? (
+            <img 
+              src={heroImageSrc} 
+              alt="Dashboard Hero" 
+              className="h-64 w-full object-cover"
+              loading="eager"
+            />
+          ) : (
+            <div className="h-64 w-full bg-gradient-to-r from-brand-primary/20 to-brand-secondary/20 animate-pulse" />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+          <div className="absolute bottom-4 left-4 text-white">
+            <h2 className="text-2xl font-semibold">运营数据仪表盘</h2>
+            <p className="text-base opacity-90">实时监控核心业务指标</p>
+          </div>
         </div>
-      </div>
 
       <header>
         <h3 className="section-title">运营总览原型</h3>
@@ -97,5 +98,6 @@ export function DashboardPage() {
         </ol>
       </article>
     </section>
+    </div>
   );
 }
