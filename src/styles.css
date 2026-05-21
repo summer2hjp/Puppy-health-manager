@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color: #111827;
+  background-color: #f6f8fc;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Noto Sans SC', sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+.focus-ring {
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-focus focus-visible:ring-offset-2;
+}
+
+.skip-link {
+  @apply sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:shadow-popup;
+}
+
+.card {
+  @apply rounded-md border border-brand-border bg-brand-surface shadow-card;
+}
+
+.section-title {
+  @apply text-lg font-semibold text-brand-text;
+}
+
+.section-desc {
+  @apply text-sm text-brand-muted;
+}
