@@ -1,71 +1,19 @@
 ```
+# Build artifacts
+dist/
+build/
+*.js
+*.ts
+*.tsx
+
 # Dependencies
 node_modules/
 
-# Build artifacts
-dist/
+# Editors
+.vscode/
 
 # Environment
 .env
 .env.local
-.env.*
-
-# Editors
-.vscode/
-.idea/
-
-# Logs
-*.log
-
-# Python cache
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# Temporary files
-*.tmp
-*.swp
-*.swo
-
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# TypeScript build info
-tsconfig.tsbuildinfo
-
-# Package lock files
-package-lock.json
-yarn.lock
-
-# Coverage reports
-coverage/
-htmlcov/
-.coverage
-
-# Distribution / packaging
-*.tar
-*.tar.gz
-*.zip
-*.gz
-*.bz2
-*.xz
-*.7z
-*.rar
-*.zst
-*.lz4
-*.lzh
-*.cab
-*.arj
-*.rpm
-*.deb
-*.Z
-*.lz
-*.lzo
-*.tar.gz
-*.tar.bz2
-*.tar.xz
-*.tar.zst
-
+*.env.*
 ```
