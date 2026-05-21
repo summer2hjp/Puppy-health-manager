@@ -1,5 +1,6 @@
 """Authentication dependencies and security."""
 import sqlite3
+from typing import Callable
 
 from fastapi import Depends, HTTPException, Security, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
@@ -8,8 +9,18 @@ from app.db.connection import Database
 from app.models.repositories import SessionRepository
 
 
-def create_auth_dependency(db: Database):
-    """Create authentication dependencies for routes."""
+def get_current_user_dependency(db: Database) -> Callable[[HTTPAuthorizationCredentials | None], sqlite3.Row]:
+    """Create authentication dependencies for routes.
+    
+    Args:
+        db: Database instance
+        
+    Returns:
+        A dependency function that retrieves the current user from a bearer token.
+        
+    Raises:
+        HTTPException: If credentials are missing or invalid (401 Unauthorized)
+    """
     bearer_scheme = HTTPBearer(auto_error=False, scheme_name="BearerAuth")
     session_repo = SessionRepository(db)
 
@@ -27,7 +38,19 @@ def create_auth_dependency(db: Database):
     return get_current_user
 
 
+# Alias for backward compatibility
+create_auth_dependency = get_current_user_dependency
+
+
 def require_role(user: sqlite3.Row, allowed_roles: set[str]) -> None:
-    """Check if user has one of the allowed roles."""
+    """Check if user has one of the allowed roles.
+    
+    Args:
+        user: User row containing role information
+        allowed_roles: Set of allowed role names
+        
+    Raises:
+        HTTPException: If user role is not in allowed_roles (403 Forbidden)
+    """
     if user["role"] not in allowed_roles:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")

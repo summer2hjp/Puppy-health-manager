@@ -1,19 +1,4 @@
 ```
-# Build artifacts
-dist/
-build/
-*.js
-*.ts
-*.tsx
-
-# Dependencies
-node_modules/
-
-# Editors
-.vscode/
-
-# Environment
-.env
-.env.local
-*.env.*
+__pycache__/
+*.pyc
 ```
