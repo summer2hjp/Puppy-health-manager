@@ -1,1 +1,7 @@
-Nothing should be ignored since only image files were modified and no build artifacts, dependencies, or temporary files were detected in the changes.
+```
+# Dependencies
+node_modules/
+
+# Vite specific
+node_modules/.vite/
+```
