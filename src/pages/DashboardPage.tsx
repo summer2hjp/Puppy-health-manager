@@ -61,7 +61,7 @@ export function DashboardPage() {
     <div className="min-h-screen">
       <section className="space-y-4 p-4">
         {/* Hero Banner with Image - Full Width */}
-        <div className="relative overflow-hidden rounded-lg shadow-md glassmorphism">
+        <div className="relative overflow-hidden rounded-lg shadow-md glassmorphism-enhanced">
           {heroImageSrc ? (
             <img 
               src={heroImageSrc} 
@@ -80,18 +80,23 @@ export function DashboardPage() {
         </div>
 
       <header>
-        <h3 className="section-title">运营总览原型</h3>
-        <p className="section-desc">聚合用户、问诊、内容、预约四类核心指标。</p>
+        <h3 className="section-title text-readable-title">运营总览原型</h3>
+        <p className="section-desc text-readable-muted">聚合用户、问诊、内容、预约四类核心指标。</p>
       </header>
       <StatusBanner state="empty" message="今日尚无新的投诉工单。" />
-      <div className="grid gap-4 md:grid-cols-3">
+      
+      {/* 滚动式卡片布局 - 运营数据指标 */}
+      <div className="scroll-cards-container">
         {metrics.map((metric) => (
-          <MetricCard key={metric.title} {...metric} />
+          <div key={metric.title} className="scroll-card-item">
+            <MetricCard {...metric} />
+          </div>
         ))}
       </div>
-      <article className="card glassmorphism p-4">
-        <h4 className="font-medium">关键路径</h4>
-        <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-brand-muted">
+      
+      <article className="card glassmorphism-enhanced p-4">
+        <h4 className="font-medium text-readable-title">关键路径</h4>
+        <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-readable-muted">
           <li>用户登录后创建宠物档案并完成首条健康记录。</li>
           <li>通过症状自查进入在线问诊，医生 5 分钟内首次响应。</li>
           <li>问诊完成后进入复诊提醒并推荐知识库内容。</li>

@@ -9,10 +9,10 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const variantClass: Record<Variant, string> = {
-  primary: 'bg-brand-primary text-white hover:bg-brand-primaryHover border-transparent',
-  secondary: 'bg-white text-brand-text border-brand-border hover:bg-slate-50',
-  ghost: 'bg-transparent text-brand-text border-transparent hover:bg-slate-100',
-  danger: 'bg-rose-600 text-white border-transparent hover:bg-rose-700'
+  primary: 'bg-brand-primary/90 text-white hover:bg-brand-primaryHover border-transparent backdrop-blur-sm',
+  secondary: 'bg-white/80 text-readable-dark border-brand-border hover:bg-white/90 backdrop-blur-sm glassmorphism-enhanced',
+  ghost: 'bg-transparent text-readable-dark border-transparent hover:bg-white/40 backdrop-blur-sm',
+  danger: 'bg-rose-600/90 text-white border-transparent hover:bg-rose-700/90 backdrop-blur-sm'
 };
 
 const sizeClass: Record<Size, string> = {
