@@ -4,7 +4,7 @@ import sqlite3
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from app.db.connection import Database
-from app.core.auth import require_role
+from app.core.auth import require_role, create_auth_dependency
 from app.schemas.requests import CmsSubmissionUpdateRequest
 from app.models.repositories import CmsSubmissionRepository
 
@@ -13,9 +13,10 @@ def create_cms_router(db: Database) -> APIRouter:
     """Create CMS router."""
     router = APIRouter(prefix="/cms", tags=["cms"])
     cms_repo = CmsSubmissionRepository(db)
+    get_current_user = create_auth_dependency(db)
 
     @router.get("/submissions")
-    def list_cms_submissions(user: sqlite3.Row = Depends(lambda: None)) -> list[dict]:
+    def list_cms_submissions(user: sqlite3.Row = Depends(get_current_user)) -> list[dict]:
         """List all CMS submissions (admin only)."""
         require_role(user, {"admin"})
         rows = cms_repo.get_all()
@@ -25,7 +26,7 @@ def create_cms_router(db: Database) -> APIRouter:
     def update_cms_submission(
         submission_id: int,
         payload: CmsSubmissionUpdateRequest,
-        user: sqlite3.Row = Depends(lambda: None),
+        user: sqlite3.Row = Depends(get_current_user),
     ) -> dict:
         """Update a CMS submission status (admin only)."""
         require_role(user, {"admin"})
