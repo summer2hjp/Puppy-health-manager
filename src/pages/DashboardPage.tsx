@@ -58,7 +58,7 @@ export function DashboardPage() {
   }, []);
   
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen apple-style-body">
       <section className="space-y-4 p-4">
         {/* Hero Banner with Image - Full Width */}
         <div className="relative overflow-hidden rounded-lg shadow-md glassmorphism-enhanced">
@@ -74,19 +74,19 @@ export function DashboardPage() {
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
           <div className="absolute bottom-4 left-4 text-white">
-            <h2 className="text-2xl font-semibold">运营数据仪表盘</h2>
-            <p className="text-base opacity-90">实时监控核心业务指标</p>
+            <h2 className="text-2xl font-semibold apple-style-heading">运营数据仪表盘</h2>
+            <p className="text-base opacity-90 apple-style-subheading">实时监控核心业务指标</p>
           </div>
         </div>
 
       <header>
-        <h3 className="section-title text-readable-title">运营总览原型</h3>
-        <p className="section-desc text-readable-muted">聚合用户、问诊、内容、预约四类核心指标。</p>
+        <h3 className="section-title text-readable-title apple-style-heading">运营总览原型</h3>
+        <p className="section-desc text-readable-muted apple-style-subheading">聚合用户、问诊、内容、预约四类核心指标。</p>
       </header>
       <StatusBanner state="empty" message="今日尚无新的投诉工单。" />
       
-      {/* 滚动式卡片布局 - 运营数据指标 */}
-      <div className="scroll-cards-container">
+      {/* 滚动式卡片布局 - 运营数据指标 (自动轮播，3s 切换) */}
+      <div className="scroll-cards-container scroll-cards-auto">
         {metrics.map((metric) => (
           <div key={metric.title} className="scroll-card-item">
             <MetricCard {...metric} />
@@ -95,8 +95,8 @@ export function DashboardPage() {
       </div>
       
       <article className="card glassmorphism-enhanced p-4">
-        <h4 className="font-medium text-readable-title">关键路径</h4>
-        <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-readable-muted">
+        <h4 className="font-medium text-readable-title apple-style-heading">关键路径</h4>
+        <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-readable-muted apple-style-subheading">
           <li>用户登录后创建宠物档案并完成首条健康记录。</li>
           <li>通过症状自查进入在线问诊，医生 5 分钟内首次响应。</li>
           <li>问诊完成后进入复诊提醒并推荐知识库内容。</li>
