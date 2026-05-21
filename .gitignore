@@ -1,39 +1,6 @@
 ```
-# Database files
-*.db
-
-# Environment variables
-.env
-.env.local
-*.env.*
-
-# Logs
-*.log
-
-# Dependencies
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-.Python
-env/
-venv/
-ENV/
-.venv/
-.env/
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Testing
-.coverage
-coverage/
-nosetests.xml
-htmlcov/
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
 ```
