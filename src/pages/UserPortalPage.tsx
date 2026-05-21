@@ -8,7 +8,7 @@ const records = [
 
 export function UserPortalPage() {
   return (
-    <section className="space-y-4 apple-style-body">
+    <section className="space-y-4 apple-style-body text-readable-title">
       <header>
         <h3 className="section-title text-readable-title apple-style-heading">用户端原型</h3>
         <p className="section-desc text-readable-muted apple-style-subheading">聚焦宠物档案、提醒中心、问诊入口与社区快捷入口。</p>

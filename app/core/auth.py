@@ -1,5 +1,4 @@
 """Authentication dependencies and security."""
-import sqlite3
 from typing import Callable
 
 from fastapi import Depends, HTTPException, Security, status
@@ -9,7 +8,7 @@ from app.db.connection import Database
 from app.models.repositories import SessionRepository
 
 
-def get_current_user_dependency(db: Database) -> Callable[[HTTPAuthorizationCredentials | None], sqlite3.Row]:
+def get_current_user_dependency(db: Database) -> Callable[[HTTPAuthorizationCredentials | None], dict]:
     """Create authentication dependencies for routes.
     
     Args:
@@ -26,14 +25,14 @@ def get_current_user_dependency(db: Database) -> Callable[[HTTPAuthorizationCred
 
     def get_current_user(
         credentials: HTTPAuthorizationCredentials | None = Security(bearer_scheme),
-    ) -> sqlite3.Row:
+    ) -> dict:
         if credentials is None:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Unauthorized")
         token = credentials.credentials.strip()
         user = session_repo.get_by_token(token)
         if user is None:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Unauthorized")
-        return user
+        return dict(user)
 
     return get_current_user
 
@@ -42,11 +41,11 @@ def get_current_user_dependency(db: Database) -> Callable[[HTTPAuthorizationCred
 create_auth_dependency = get_current_user_dependency
 
 
-def require_role(user: sqlite3.Row, allowed_roles: set[str]) -> None:
+def require_role(user: dict, allowed_roles: set[str]) -> None:
     """Check if user has one of the allowed roles.
     
     Args:
-        user: User row containing role information
+        user: User dict containing role information
         allowed_roles: Set of allowed role names
         
     Raises:

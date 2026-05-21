@@ -8,7 +8,7 @@ const submissions = [
 
 export function CmsPage() {
   return (
-    <section className="space-y-4">
+    <section className="space-y-4 text-readable-title">
       <header>
         <h3 className="section-title text-readable-title">CMS 原型</h3>
         <p className="section-desc text-readable-muted">包含内容审核流、定时发布、SEO 与运营位管理。</p>
