@@ -69,7 +69,7 @@ export function LoginPage() {
   }, []);
 
   return (
-    <main id="main-content" className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 global-bg">
+    <main id="main-content" className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 global-bg text-readable-title">
       {/* 背景图片层 - 使用磨玻璃效果遮罩 */}
       <div 
         className={`absolute inset-0 bg-cover bg-center z-0 transition-opacity duration-500 ${bgLoaded ? 'opacity-100' : 'opacity-0'}`}

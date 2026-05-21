@@ -1,7 +1,5 @@
 """Authentication router."""
-import sqlite3
-
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, HTTPException, status
 
 from app.db.connection import Database
 from app.core.security import hash_password, generate_token
@@ -23,7 +21,7 @@ def create_auth_router(db: Database) -> APIRouter:
                 password_hash=hash_password(payload.password),
                 role=payload.role,
             )
-        except sqlite3.IntegrityError as exc:
+        except Exception as exc:
             raise HTTPException(
                 status_code=status.HTTP_409_CONFLICT, 
                 detail="Username already exists"

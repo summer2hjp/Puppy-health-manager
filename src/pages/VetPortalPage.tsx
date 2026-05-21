@@ -8,7 +8,7 @@ const queue = [
 
 export function VetPortalPage() {
   return (
-    <section className="space-y-4 apple-style-body">
+    <section className="space-y-4 apple-style-body text-readable-title">
       <header>
         <h3 className="section-title text-readable-title apple-style-heading">兽医端原型</h3>
         <p className="section-desc text-readable-muted apple-style-subheading">覆盖分诊队列、病历授权查看、处方开立与复诊追踪。</p>

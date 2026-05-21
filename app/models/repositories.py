@@ -1,5 +1,4 @@
 """Database models and repository functions."""
-import sqlite3
 from typing import Optional
 
 from app.core.datetime_utils import utc_now_iso, normalize_iso_datetime
@@ -21,20 +20,21 @@ class UserRepository:
             )
             return cursor.lastrowid
 
-    def get_by_username(self, username: str) -> Optional[sqlite3.Row]:
+    def get_by_username(self, username: str) -> Optional[dict]:
         """Get user by username."""
         with self.db.get_connection() as conn:
-            return conn.execute(
+            row = conn.execute(
                 "SELECT id, username, role, password_hash FROM users WHERE username = ?",
                 (username,),
             ).fetchone()
+            return dict(row) if row else None
 
     def exists(self, username: str) -> bool:
         """Check if username exists."""
         try:
             self.create(username, "temp", "owner")
             return True
-        except sqlite3.IntegrityError:
+        except Exception:
             return True
 
 
@@ -52,10 +52,10 @@ class SessionRepository:
                 (token, user_id, utc_now_iso()),
             )
 
-    def get_by_token(self, token: str) -> Optional[sqlite3.Row]:
+    def get_by_token(self, token: str) -> Optional[dict]:
         """Get session by token with user info."""
         with self.db.get_connection() as conn:
-            return conn.execute(
+            row = conn.execute(
                 """
                 SELECT u.id, u.username, u.role
                 FROM sessions s
@@ -64,6 +64,7 @@ class SessionRepository:
                 """,
                 (token,),
             ).fetchone()
+            return dict(row) if row else None
 
 
 class PetRepository:
@@ -93,24 +94,26 @@ class PetRepository:
             )
             return cursor.lastrowid
 
-    def get_by_owner(self, owner_id: int) -> list[sqlite3.Row]:
+    def get_by_owner(self, owner_id: int) -> list[dict]:
         """Get all pets for an owner."""
         with self.db.get_connection() as conn:
-            return conn.execute(
+            rows = conn.execute(
                 """
                 SELECT id, name, species, breed, age_months, weight_kg, allergy_notes, created_at
                 FROM pets WHERE owner_id = ? ORDER BY id ASC
                 """,
                 (owner_id,),
             ).fetchall()
+            return [dict(row) for row in rows]
 
-    def get_by_id_and_owner(self, pet_id: int, owner_id: int) -> Optional[sqlite3.Row]:
+    def get_by_id_and_owner(self, pet_id: int, owner_id: int) -> Optional[dict]:
         """Get pet by ID and owner ID."""
         with self.db.get_connection() as conn:
-            return conn.execute(
+            row = conn.execute(
                 "SELECT id FROM pets WHERE id = ? AND owner_id = ?",
                 (pet_id, owner_id),
             ).fetchone()
+            return dict(row) if row else None
 
 
 class WeightRecordRepository:
@@ -131,10 +134,10 @@ class WeightRecordRepository:
             )
             return cursor.lastrowid
 
-    def get_by_pet_and_owner(self, pet_id: int, owner_id: int) -> list[sqlite3.Row]:
+    def get_by_pet_and_owner(self, pet_id: int, owner_id: int) -> list[dict]:
         """Get all weight records for a pet."""
         with self.db.get_connection() as conn:
-            return conn.execute(
+            rows = conn.execute(
                 """
                 SELECT id, weight_kg, recorded_at, created_at
                 FROM pet_weight_records
@@ -143,6 +146,7 @@ class WeightRecordRepository:
                 """,
                 (pet_id, owner_id),
             ).fetchall()
+            return [dict(row) for row in rows]
 
 
 class VetQueueRepository:
@@ -151,24 +155,26 @@ class VetQueueRepository:
     def __init__(self, db: Database) -> None:
         self.db = db
 
-    def get_all(self) -> list[sqlite3.Row]:
+    def get_all(self) -> list[dict]:
         """Get all vet queue items."""
         with self.db.get_connection() as conn:
-            return conn.execute(
+            rows = conn.execute(
                 """
                 SELECT id, owner_name, symptom, level, status, created_at, updated_at
                 FROM vet_consult_queue
                 ORDER BY id ASC
                 """
             ).fetchall()
+            return [dict(row) for row in rows]
 
-    def get_by_id(self, queue_id: int) -> Optional[sqlite3.Row]:
+    def get_by_id(self, queue_id: int) -> Optional[dict]:
         """Get vet queue item by ID."""
         with self.db.get_connection() as conn:
-            return conn.execute(
+            row = conn.execute(
                 "SELECT id FROM vet_consult_queue WHERE id = ?",
                 (queue_id,),
             ).fetchone()
+            return dict(row) if row else None
 
     def update_status(self, queue_id: int, status: str) -> str:
         """Update vet queue item status. Returns updated_at timestamp."""
@@ -187,24 +193,26 @@ class CmsSubmissionRepository:
     def __init__(self, db: Database) -> None:
         self.db = db
 
-    def get_all(self) -> list[sqlite3.Row]:
+    def get_all(self) -> list[dict]:
         """Get all CMS submissions."""
         with self.db.get_connection() as conn:
-            return conn.execute(
+            rows = conn.execute(
                 """
                 SELECT id, title, author, status, created_at, updated_at
                 FROM cms_submissions
                 ORDER BY id ASC
                 """
             ).fetchall()
+            return [dict(row) for row in rows]
 
-    def get_by_id(self, submission_id: int) -> Optional[sqlite3.Row]:
+    def get_by_id(self, submission_id: int) -> Optional[dict]:
         """Get CMS submission by ID."""
         with self.db.get_connection() as conn:
-            return conn.execute(
+            row = conn.execute(
                 "SELECT id, title, author FROM cms_submissions WHERE id = ?",
                 (submission_id,),
             ).fetchone()
+            return dict(row) if row else None
 
     def update_status(self, submission_id: int, status: str) -> str:
         """Update CMS submission status. Returns updated_at timestamp."""

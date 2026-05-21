@@ -58,7 +58,7 @@ export function DashboardPage() {
   }, []);
   
   return (
-    <div className="min-h-screen apple-style-body">
+    <div className="min-h-screen apple-style-body text-readable-title">
       <section className="space-y-4 p-4">
         {/* Hero Banner with Image - Full Width */}
         <div className="relative overflow-hidden rounded-lg shadow-md glassmorphism-enhanced">
@@ -85,10 +85,10 @@ export function DashboardPage() {
       </header>
       <StatusBanner state="empty" message="今日尚无新的投诉工单。" />
       
-      {/* 滚动式卡片布局 - 运营数据指标 (自动轮播，3s 切换) */}
-      <div className="scroll-cards-container scroll-cards-auto">
+      {/* 滚动式卡片布局 - 运营数据指标 (取消自动轮播和手动滑动) */}
+      <div className="grid gap-4 md:grid-cols-3">
         {metrics.map((metric) => (
-          <div key={metric.title} className="scroll-card-item">
+          <div key={metric.title}>
             <MetricCard {...metric} />
           </div>
         ))}
