@@ -3,39 +3,85 @@ import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { useState, useEffect } from 'react';
 
-export function LoginPage() {
-  const [imagesLoaded, setImagesLoaded] = useState({
-    bg: false,
-    logo: false
-  });
+// 支持的图片格式列表（按优先级排序）
+const SUPPORTED_FORMATS = ['png', 'jpg', 'jpeg'];
 
-  useEffect(() => {
-    // 预加载图片
-    const preloadImage = (src: string, key: keyof typeof imagesLoaded) => {
-      const img = new Image();
-      img.src = src;
-      img.onload = () => setImagesLoaded(prev => ({ ...prev, [key]: true }));
-      img.onerror = () => console.error(`Failed to load image: ${src}`);
+// 通用图片预加载函数：尝试多种格式直到成功
+const preloadImageWithFormats = (
+  basePath: string,
+  onLoad: (src: string) => void,
+  onError?: () => void
+) => {
+  let loaded = false;
+  
+  // 尝试每种格式
+  for (const format of SUPPORTED_FORMATS) {
+    const img = new Image();
+    const src = `${basePath}.${format}`;
+    
+    img.onload = () => {
+      if (!loaded) {
+        loaded = true;
+        console.log(`Successfully loaded: ${src}`);
+        onLoad(src);
+      }
     };
+    
+    img.onerror = () => {
+      // 如果是最后一个格式才报错
+      if (format === SUPPORTED_FORMATS[SUPPORTED_FORMATS.length - 1] && !loaded) {
+        console.error(`Failed to load image with any format: ${basePath}`);
+        onError?.();
+      }
+      // 继续尝试下一个格式
+    };
+    
+    img.src = src;
+  }
+};
 
-    preloadImage('/docs/images/login/login-bg.png', 'bg');
-    preloadImage('/docs/images/login/logo.png', 'logo');
+export function LoginPage() {
+  const [bgLoaded, setBgLoaded] = useState(false);
+  const [bgSrc, setBgSrc] = useState<string>('');
+  const [logoLoaded, setLogoLoaded] = useState(false);
+  const [logoSrc, setLogoSrc] = useState<string>('');
+  
+  useEffect(() => {
+    // 预加载背景图（支持 png/jpg）
+    preloadImageWithFormats(
+      '/docs/images/login/login-bg',
+      (src) => {
+        setBgSrc(src);
+        setBgLoaded(true);
+      },
+      () => console.error('Login background image failed to load')
+    );
+    
+    // 预加载 Logo（支持 png/jpg）
+    preloadImageWithFormats(
+      '/docs/images/login/logo',
+      (src) => {
+        setLogoSrc(src);
+        setLogoLoaded(true);
+      },
+      () => console.error('Login logo image failed to load')
+    );
   }, []);
 
   return (
     <main id="main-content" className="relative flex min-h-screen items-center justify-center overflow-hidden px-4">
       {/* 背景图片 */}
       <div 
-        className={`absolute inset-0 bg-cover bg-center z-0 transition-opacity duration-500 ${imagesLoaded.bg ? 'opacity-100' : 'opacity-0'}`}
-        style={{ backgroundImage: "url('/docs/images/login/login-bg.png')" }}
+        className={`absolute inset-0 bg-cover bg-center z-0 transition-opacity duration-500 ${bgLoaded ? 'opacity-100' : 'opacity-0'}`}
+        style={{ backgroundImage: `url('${bgSrc}')` }}
         aria-hidden="true"
       />
       
       <section className="relative z-10 w-full max-w-md rounded-lg border border-brand-border bg-white/95 backdrop-blur-sm p-6 shadow-popup">
         <header className="mb-5 flex flex-col items-center">
-          {imagesLoaded.logo && (
+          {logoLoaded && logoSrc && (
             <img 
-              src="/docs/images/login/logo.png" 
+              src={logoSrc} 
               alt="PetCare Logo" 
               className="mb-3 h-12 w-auto"
               loading="eager"
