@@ -15,9 +15,9 @@ export function VetPortalPage() {
       </header>
       <StatusBanner state="default" message="当前在线问诊队列 3 条，平均响应 4 分钟。" />
 
-      <article className="card overflow-hidden">
+      <article className="card glassmorphism overflow-hidden">
         <table className="min-w-full divide-y divide-brand-border text-sm">
-          <thead className="bg-slate-50">
+          <thead className="bg-slate-50/80 backdrop-blur-sm">
             <tr>
               <th className="px-4 py-3 text-left">病例号</th>
               <th className="px-4 py-3 text-left">宠物主</th>
@@ -26,7 +26,7 @@ export function VetPortalPage() {
               <th className="px-4 py-3 text-left">操作</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-brand-border bg-white">
+          <tbody className="divide-y divide-brand-border bg-white/60 backdrop-blur-sm">
             {queue.map((row) => (
               <tr key={row.caseId}>
                 <td className="px-4 py-3">{row.caseId}</td>
@@ -34,7 +34,7 @@ export function VetPortalPage() {
                 <td className="px-4 py-3">{row.symptom}</td>
                 <td className="px-4 py-3">{row.level}</td>
                 <td className="px-4 py-3">
-                  <button className="focus-ring rounded-md bg-brand-primary px-3 py-1.5 text-xs font-medium text-white hover:bg-brand-primaryHover">
+                  <button className="focus-ring rounded-md bg-brand-primary px-3 py-1.5 text-xs font-medium text-white hover:bg-brand-primaryHover backdrop-blur-sm">
                     开始接诊
                   </button>
                 </td>
