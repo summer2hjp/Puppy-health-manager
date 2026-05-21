@@ -77,10 +77,10 @@ export function LoginPage() {
         aria-hidden="true"
       />
       
-      {/* 磨玻璃效果遮罩层 */}
-      <div className="absolute inset-0 bg-black/20 backdrop-blur-sm z-0" aria-hidden="true" />
+      {/* 深色遮罩层 - 增强登录框文字对比度 */}
+      <div className="absolute inset-0 bg-black/30 backdrop-blur-sm z-0" aria-hidden="true" />
       
-      <section className="relative z-10 w-full max-w-md rounded-lg border border-white/30 glassmorphism p-6 shadow-popup">
+      <section className="relative z-10 w-full max-w-md rounded-lg border border-white/50 glassmorphism-login p-6 shadow-popup">
         <header className="mb-5 flex flex-col items-center">
           {logoLoaded && logoSrc && (
             <img 
@@ -90,8 +90,8 @@ export function LoginPage() {
               loading="eager"
             />
           )}
-          <h1 className="text-2xl font-semibold">欢迎登录 PetCare</h1>
-          <p className="mt-1 text-sm text-brand-muted">支持宠物主、兽医与运营管理员统一登录。</p>
+          <h1 className="text-2xl font-semibold text-readable-title">欢迎登录 PetCare</h1>
+          <p className="mt-1 text-sm text-readable-muted">支持宠物主、兽医与运营管理员统一登录。</p>
         </header>
 
         <form className="space-y-3" aria-label="登录表单">
@@ -104,8 +104,8 @@ export function LoginPage() {
         </form>
 
         <div className="mt-4 flex items-center justify-between text-sm">
-          <a href="#" className="focus-ring text-brand-primary hover:underline">忘记密码</a>
-          <Link to="/dashboard" className="focus-ring text-brand-primary hover:underline">查看原型（跳过登录）</Link>
+          <a href="#" className="focus-ring text-brand-primary hover:underline text-readable-dark font-medium">忘记密码</a>
+          <Link to="/dashboard" className="focus-ring text-brand-primary hover:underline text-readable-dark font-medium">查看原型（跳过登录）</Link>
         </div>
       </section>
     </main>

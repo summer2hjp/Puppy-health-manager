@@ -21,12 +21,80 @@ body {
   background-attachment: fixed;
 }
 
-/* 磨玻璃效果类 */
+/* 磨玻璃效果类 - 基础版本 */
 .glassmorphism {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 磨玻璃效果类 - 增强版本（用于卡片和组件） */
+.glassmorphism-enhanced {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* 登录框专用磨玻璃效果 - 更深的背景以增强文字对比度 */
+.glassmorphism-login {
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+/* 滚动卡片容器样式 */
+.scroll-cards-container {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  padding-bottom: 0.5rem;
+}
+
+.scroll-cards-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.scroll-cards-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.scroll-cards-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.scroll-card-item {
+  flex: 0 0 auto;
+  width: 280px;
+  scroll-snap-align: start;
+}
+
+/* 增强文字可读性 - 深色文字 */
+.text-readable-dark {
+  color: #1f2937;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+/* 增强文字可读性 - 标题文字 */
+.text-readable-title {
+  color: #111827;
+  font-weight: 600;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
+}
+
+/* 增强文字可读性 - 次要文字 */
+.text-readable-muted {
+  color: #374151;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7);
 }
 
 .focus-ring {
