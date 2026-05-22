@@ -185,7 +185,7 @@ body {
 }
 
 .card {
-  @apply rounded-md border border-brand-border bg-brand-surface shadow-card;
+  @apply rounded-md border border-brand-border bg-brand-surface shadow-card transition-shadow duration-200 hover:shadow-cardHover;
 }
 
 .section-title {
@@ -194,4 +194,76 @@ body {
 
 .section-desc {
   @apply text-sm text-brand-muted;
+}
+
+/* 按钮按压缩放效果 */
+.btn-press {
+  @apply active:scale-95 transition-transform duration-150;
+}
+
+/* 微交互动效 - 悬停提升效果 */
+.hover-lift {
+  @apply transition-all duration-200 hover:-translate-y-0.5 hover:shadow-cardHover;
+}
+
+/* 骨架屏加载动画 */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.skeleton {
+  @apply bg-gray-200;
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+}
+
+/* 表单错误状态 */
+.input-error {
+  @apply border-brand-error focus:ring-brand-error;
+}
+
+.error-message {
+  @apply text-xs text-brand-error mt-1;
+}
+
+/* 平滑滚动 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 移动端汉堡菜单样式 */
+.mobile-menu-button {
+  @apply md:hidden focus-ring p-2 rounded-md hover:bg-white/50 transition-colors;
+}
+
+/* 移动导航抽屉 */
+.mobile-nav-drawer {
+  @apply fixed inset-0 z-40 md:hidden;
+}
+
+.mobile-nav-overlay {
+  @apply absolute inset-0 bg-black/50 backdrop-blur-sm;
+}
+
+.mobile-nav-panel {
+  @apply absolute left-0 top-0 h-full w-64 bg-brand-bg shadow-popup transform transition-transform duration-300 ease-in-out;
+}
+
+.mobile-nav-panel-open {
+  @apply translate-x-0;
+}
+
+.mobile-nav-panel-closed {
+  @apply -translate-x-full;
 }
