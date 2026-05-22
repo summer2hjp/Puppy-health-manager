@@ -28,8 +28,20 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  filter: blur(8px);
+}
+
+/* Dashboard 背景虚化层 - 用于内容区域下方 */
+.dashboard-blur-overlay {
+  position: fixed;
+  inset: 0;
+  background-image: url('/images/dashboard/dashboard-hero.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(12px);
   transform: scale(1.05);
+  z-index: -1;
+  opacity: 0.8;
 }
 
 /* 磨玻璃效果类 - 基础版本 */

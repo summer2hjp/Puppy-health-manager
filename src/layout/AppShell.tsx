@@ -13,10 +13,34 @@ export function AppShell() {
 
   return (
     <div className="min-h-screen bg-brand-bg text-brand-text global-bg">
+      {/* 桌面端顶部导航栏 - 置顶布局 */}
+      <header className="hidden md:block fixed top-0 left-0 right-0 z-40 glassmorphism-enhanced border-b border-white/30">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
+          <h1 className="text-lg font-semibold text-readable-title">PetCare 控制台</h1>
+          <nav className="flex items-center gap-2" aria-label="主导航">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }) =>
+                  `focus-ring rounded-md px-4 py-2 text-sm transition text-readable-title ${
+                    isActive
+                      ? 'bg-brand-primary text-white shadow-md'
+                      : 'text-brand-text hover:bg-white/50'
+                  }`
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
+        </div>
+      </header>
+
       {/* 移动端汉堡菜单按钮 */}
       <button
         type="button"
-        className="mobile-menu-button fixed left-4 top-4 z-50 md:hidden"
+        className="mobile-menu-button fixed left-4 top-4 z-50 md:hidden glassmorphism-enhanced"
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         aria-label={isMobileMenuOpen ? '关闭导航菜单' : '打开导航菜单'}
         aria-expanded={isMobileMenuOpen}
@@ -64,31 +88,11 @@ export function AppShell() {
         </div>
       )}
 
-      <div className="mx-auto flex max-w-7xl gap-6 px-4 py-6 lg:px-8">
-        {/* 桌面端侧边栏 - 隐藏于移动端 */}
-        <aside className="hidden w-56 flex-shrink-0 rounded-lg border border-brand-border bg-white/30 backdrop-blur-xl p-4 shadow-card md:block glassmorphism-enhanced">
-          <h1 className="mb-4 text-base font-semibold text-readable-title">PetCare 控制台</h1>
-          <nav className="space-y-2" aria-label="主导航">
-            {navItems.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className={({ isActive }) =>
-                  `focus-ring block rounded-md px-3 py-2 text-sm transition text-readable-title ${
-                    isActive
-                      ? 'bg-brand-primary text-white'
-                      : 'text-brand-text hover:bg-white/50'
-                  }`
-                }
-              >
-                {item.label}
-              </NavLink>
-            ))}
-          </nav>
-        </aside>
+      <div className="mx-auto flex max-w-7xl gap-6 px-4 pt-20 pb-6 lg:px-8">
+        {/* 桌面端顶部导航栏 - 已移至顶部 */}
 
         <main id="main-content" className="min-w-0 flex-1 space-y-6">
-          <header className="card glassmorphism flex items-center justify-between px-5 py-4">
+          <header className="card glassmorphism-enhanced flex items-center justify-between px-5 py-4">
             <div>
               <p className="text-xs uppercase tracking-wide text-brand-muted text-readable-muted">Prototype</p>
               <h2 className="text-lg font-semibold text-readable-title">宠物健康管理平台</h2>

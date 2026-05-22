@@ -11,7 +11,7 @@ const userReminders: ReminderItem[] = [
     description: '您的宠物"豆豆"的狂犬疫苗将在 7 天后到期，请及时预约接种。',
     dueDate: '2024-06-15',
     priority: 'high',
-    onClick: () => alert('跳转到疫苗预约页面'),
+    onClick: () => window.location.href = '/user/vaccine',
   },
   {
     id: 'u2',
@@ -20,7 +20,7 @@ const userReminders: ReminderItem[] = [
     description: '您的 VIP 会员服务将在 3 天后过期，续费可享受 8 折优惠。',
     dueDate: '2024-06-11',
     priority: 'medium',
-    onClick: () => alert('跳转到会员续费页面'),
+    onClick: () => window.location.href = '/user/membership',
   },
   {
     id: 'u3',
@@ -29,7 +29,7 @@ const userReminders: ReminderItem[] = [
     description: '您还有 2 条宠物健康记录未填写，完善后可获得积分奖励。',
     dueDate: '2024-06-20',
     priority: 'low',
-    onClick: () => alert('跳转到健康记录页面'),
+    onClick: () => window.location.href = '/user/health-records',
   },
 ];
 
@@ -42,7 +42,7 @@ const vetCases: ReminderItem[] = [
     description: '金毛犬，3 岁，消化不良症状，待复诊检查。',
     dueDate: '2024-06-10',
     priority: 'high',
-    onClick: () => alert('跳转到病例 #2024060801 详情页'),
+    onClick: () => window.location.href = '/vet/case/2024060801',
   },
   {
     id: 'v2',
@@ -51,7 +51,7 @@ const vetCases: ReminderItem[] = [
     description: '英短猫，2 岁，疫苗接种后观察，状态良好。',
     dueDate: '2024-06-12',
     priority: 'medium',
-    onClick: () => alert('跳转到病例 #2024060802 详情页'),
+    onClick: () => window.location.href = '/vet/case/2024060802',
   },
   {
     id: 'v3',
@@ -60,7 +60,7 @@ const vetCases: ReminderItem[] = [
     description: '边境牧羊犬，5 岁，皮肤过敏治疗中，需持续用药。',
     dueDate: '2024-06-18',
     priority: 'low',
-    onClick: () => alert('跳转到病例 #2024060803 详情页'),
+    onClick: () => window.location.href = '/vet/case/2024060803',
   },
   {
     id: 'v4',
@@ -69,7 +69,7 @@ const vetCases: ReminderItem[] = [
     description: '波斯猫，4 岁，眼部感染，需每日滴眼药水。',
     dueDate: '2024-06-09',
     priority: 'high',
-    onClick: () => alert('跳转到病例 #2024060804 详情页'),
+    onClick: () => window.location.href = '/vet/case/2024060804',
   },
 ];
 
@@ -82,7 +82,7 @@ const cmsArticles: ReminderItem[] = [
     description: '作者：王医生，待审核。文章介绍夏季宠物防暑降温的实用方法。',
     dueDate: '2024-06-09',
     priority: 'high',
-    onClick: () => alert('跳转到稿件审核页面'),
+    onClick: () => window.location.href = '/cms/review/c1',
   },
   {
     id: 'c2',
@@ -91,7 +91,7 @@ const cmsArticles: ReminderItem[] = [
     description: '作者：李营养师，待编辑。详解幼犬各阶段喂养要点。',
     dueDate: '2024-06-11',
     priority: 'medium',
-    onClick: () => alert('跳转到稿件编辑页面'),
+    onClick: () => window.location.href = '/cms/edit/c2',
   },
   {
     id: 'c3',
@@ -100,7 +100,7 @@ const cmsArticles: ReminderItem[] = [
     description: '作者：张训练师，待发布。基础服从训练技巧分享。',
     dueDate: '2024-06-15',
     priority: 'low',
-    onClick: () => alert('跳转到稿件发布页面'),
+    onClick: () => window.location.href = '/cms/publish/c3',
   },
 ];
 
@@ -114,7 +114,7 @@ export function DashboardPage() {
   return (
     <div className="min-h-screen apple-style-body text-readable-title relative">
       {/* Dashboard 虚化背景层 */}
-      <div className="dashboard-bg fixed inset-0 -z-10"></div>
+      <div className="dashboard-blur-overlay"></div>
       
       <section className="space-y-4 p-4 relative z-10">
         {/* Hero Banner - 卡片式标题区域（移除图片） */}
@@ -179,13 +179,13 @@ export function DashboardPage() {
       <article className="card glassmorphism-enhanced p-4">
         <h4 className="font-medium text-readable-title apple-style-heading">关键路径</h4>
         <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-readable-muted apple-style-subheading">
-          <li className="cursor-pointer hover:text-brand-primary transition-colors" onClick={() => alert('跳转到档案创建页面')}>
+          <li className="cursor-pointer hover:text-brand-primary transition-colors" onClick={() => window.location.href = '/user/pet-profile'}>
             用户登录后创建宠物档案并完成首条健康记录。
           </li>
-          <li className="cursor-pointer hover:text-brand-primary transition-colors" onClick={() => alert('跳转到在线问诊页面')}>
+          <li className="cursor-pointer hover:text-brand-primary transition-colors" onClick={() => window.location.href = '/vet/consultation'}>
             通过症状自查进入在线问诊，医生 5 分钟内首次响应。
           </li>
-          <li className="cursor-pointer hover:text-brand-primary transition-colors" onClick={() => alert('跳转到复诊提醒页面')}>
+          <li className="cursor-pointer hover:text-brand-primary transition-colors" onClick={() => window.location.href = '/user/followup'}>
             问诊完成后进入复诊提醒并推荐知识库内容。
           </li>
         </ol>
