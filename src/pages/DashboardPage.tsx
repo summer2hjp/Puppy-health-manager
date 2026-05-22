@@ -112,9 +112,13 @@ const metrics = [
 
 export function DashboardPage() {
   return (
-    <div className="min-h-screen apple-style-body text-readable-title relative">
-      {/* Dashboard 虚化背景层 */}
-      <div className="dashboard-blur-overlay"></div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900 text-readable-title relative">
+      {/* Dashboard 虚化背景层 - 深色模式优化 */}
+      <div className="dashboard-blur-overlay absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-blue-900/30 rounded-full mix-blend-screen filter blur-3xl opacity-50 animate-blob"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-purple-900/30 rounded-full mix-blend-screen filter blur-3xl opacity-50 animate-blob animation-delay-2000"></div>
+        <div className="absolute -bottom-32 left-20 w-96 h-96 bg-indigo-900/30 rounded-full mix-blend-screen filter blur-3xl opacity-50 animate-blob animation-delay-4000"></div>
+      </div>
       
       <section className="space-y-4 p-4 relative z-10">
         {/* Hero Banner - 卡片式标题区域（移除图片） */}
