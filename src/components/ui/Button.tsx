@@ -24,7 +24,7 @@ export function Button({ variant = 'secondary', size = 'md', className = '', ...
   return (
     <button
       {...props}
-      className={`focus-ring rounded-md border font-medium transition disabled:cursor-not-allowed disabled:opacity-50 ${variantClass[variant]} ${sizeClass[size]} ${className}`}
+      className={`focus-ring rounded-md border font-medium transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-50 active:scale-95 hover:-translate-y-0.5 hover:shadow-cardHover ${variantClass[variant]} ${sizeClass[size]} ${className}`}
     />
   );
 }

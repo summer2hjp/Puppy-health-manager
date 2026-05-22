@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 
 // 支持的图片格式列表（按优先级排序）
 const SUPPORTED_FORMATS = ['png', 'jpg', 'jpeg'];
@@ -40,11 +40,20 @@ const preloadImageWithFormats = (
   }
 };
 
+interface FormErrors {
+  username?: string;
+  password?: string;
+}
+
 export function LoginPage() {
   const [bgLoaded, setBgLoaded] = useState(false);
   const [bgSrc, setBgSrc] = useState<string>('');
   const [logoLoaded, setLogoLoaded] = useState(false);
   const [logoSrc, setLogoSrc] = useState<string>('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   useEffect(() => {
     // 预加载背景图（支持 png/jpg）
@@ -67,6 +76,39 @@ export function LoginPage() {
       () => console.error('Login logo image failed to load')
     );
   }, []);
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+    
+    if (!username.trim()) {
+      newErrors.username = '请输入账号';
+    } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(username) && !/^\d{11}$/.test(username)) {
+      newErrors.username = '请输入有效的手机号或邮箱';
+    }
+    
+    if (!password) {
+      newErrors.password = '请输入密码';
+    } else if (password.length < 6) {
+      newErrors.password = '密码长度至少为 6 位';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    
+    if (!validateForm()) return;
+    
+    setIsSubmitting(true);
+    
+    // 模拟登录请求
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    setIsSubmitting(false);
+    // 这里可以添加实际的登录逻辑
+  };
 
   return (
     <main id="main-content" className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 global-bg text-readable-title">
@@ -94,12 +136,33 @@ export function LoginPage() {
           <p className="mt-1 text-sm text-readable-muted">支持宠物主、兽医与运营管理员统一登录。</p>
         </header>
 
-        <form className="space-y-3" aria-label="登录表单">
-          <Input label="手机号 / 邮箱" type="text" placeholder="请输入账号" />
-          <Input label="密码" type="password" placeholder="请输入密码" />
+        <form className="space-y-3" aria-label="登录表单" onSubmit={handleSubmit}>
+          <Input 
+            label="手机号 / 邮箱" 
+            type="text" 
+            placeholder="请输入账号"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            error={errors.username}
+            disabled={isSubmitting}
+          />
+          <Input 
+            label="密码" 
+            type="password" 
+            placeholder="请输入密码"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            error={errors.password}
+            disabled={isSubmitting}
+          />
 
-          <Button type="button" variant="primary" className="mt-2 w-full py-2.5">
-            登录
+          <Button 
+            type="submit" 
+            variant="primary" 
+            className="mt-2 w-full py-2.5"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? '登录中...' : '登录'}
           </Button>
         </form>
 
