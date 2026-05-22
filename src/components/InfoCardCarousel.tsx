@@ -10,6 +10,7 @@ export interface ReminderItem {
   dueDate?: string;
   priority?: 'low' | 'medium' | 'high';
   avatar?: string;
+  onClick?: () => void;
 }
 
 interface InfoCardCarouselProps {
@@ -124,12 +125,21 @@ export function InfoCardCarousel({ items, autoScroll = true, scrollInterval = 40
   return (
     <div
       ref={containerRef}
-      className="relative card glassmorphism-enhanced overflow-hidden"
+      className="relative card glassmorphism-enhanced overflow-hidden cursor-pointer hover-lift"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
+      onClick={currentItem.onClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          currentItem.onClick?.();
+        }
+      }}
     >
       {/* 卡片内容 */}
       <div className="p-6 transition-all duration-500 ease-in-out">
