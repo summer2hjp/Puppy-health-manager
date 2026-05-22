@@ -105,15 +105,18 @@ const cmsArticles: ReminderItem[] = [
 ];
 
 const metrics = [
-  { title: '日活用户', value: '12,480', trend: '较昨日 +8.2%', link: '/analytics/dau' },
-  { title: '问诊转化率', value: '17.3%', trend: '目标值 15%', link: '/analytics/conversion' },
-  { title: '档案创建率', value: '31.6%', trend: '较上周 +2.1%', link: '/analytics/archives' }
+  { title: '日活用户', value: '12,480', trend: '较昨日 +8.2%' },
+  { title: '问诊转化率', value: '17.3%', trend: '目标值 15%' },
+  { title: '档案创建率', value: '31.6%', trend: '较上周 +2.1%' }
 ];
 
 export function DashboardPage() {
   return (
-    <div className="min-h-screen apple-style-body text-readable-title">
-      <section className="space-y-4 p-4">
+    <div className="min-h-screen apple-style-body text-readable-title relative">
+      {/* Dashboard 虚化背景层 */}
+      <div className="dashboard-bg fixed inset-0 -z-10"></div>
+      
+      <section className="space-y-4 p-4 relative z-10">
         {/* Hero Banner - 卡片式标题区域（移除图片） */}
         <div className="relative overflow-hidden rounded-lg shadow-md glassmorphism-enhanced bg-gradient-to-r from-brand-primary/20 to-brand-secondary/20 p-8">
           <div className="text-readable-title">
@@ -173,7 +176,7 @@ export function DashboardPage() {
       </div>
       
       {/* 关键路径 - 磨玻璃效果卡片 */}
-      <article className="card glassmorphism-enhanced p-4 cursor-pointer hover-lift">
+      <article className="card glassmorphism-enhanced p-4">
         <h4 className="font-medium text-readable-title apple-style-heading">关键路径</h4>
         <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-readable-muted apple-style-subheading">
           <li className="cursor-pointer hover:text-brand-primary transition-colors" onClick={() => alert('跳转到档案创建页面')}>
